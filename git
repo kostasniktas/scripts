@@ -1,0 +1,28 @@
+#!/bin/bash
+
+GREEN='\033[0;32m'
+NC='\033[0;0m'
+RED='\033[0;31m'
+
+if [[ "$1" == "--nocolor" ]]; then
+  GREEN=''
+  NC=''
+  RED=''
+fi
+
+
+MATCHED=""
+UNMATCHED=""
+for i in $(git branch | sed 's/^[\s\*]*//g'); do
+  if [[ "$i" != "master" ]]; then
+    MATCHES=$(git branch -r --contains $i | grep "/master$" | grep -v "/HEAD\s" | tr '\n' ' ')
+    if [[ ! -z "$MATCHES" ]]; then
+      MATCHED="${MATCHED}${GREEN}${i}${NC} -> ${MATCHES}\n"
+    else
+      UNMATCHED="${UNMATCHED}${RED}${i}${NC}\n"
+    fi
+  fi
+done
+
+echo -e $MATCHED | sort | sed '/^$/d'
+echo -e $UNMATCHED | sort | sed '/^$/d'
