@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ $# -lt 1 ]; then
+  echo "Usage $(basename $0) SECONDS_OR_TIMESTAMP"
+  exit 1
+fi
+
+date -j -r $1
+date -j -u -r $1
