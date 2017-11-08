@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# If no argument given, assume current branch
+if [[ $# -lt 1 ]]; then
+  OLD_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+  if [[ "$OLD_BRANCH" == "HEAD" ]]; then
+    echo "Not on a branch"
+    exit 1
+  fi
+else
+  OLD_BRANCH=$1
+fi
+
+# Verify branch exists
+git rev-parse --verify --quiet $OLD_BRANCH > /dev/null 2> /dev/null
+if [[ $? -ne 0 ]]; then
+  echo "Branch \"$OLD_BRANCH\" doesn't exist"
+  exit 1
+fi
+
+echo Move $OLD_BRANCH to ZOLD_$OLD_BRANCH
+git branch -m $OLD_BRANCH ZOLD_$OLD_BRANCH
