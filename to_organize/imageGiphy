@@ -1,0 +1,12 @@
+#!/bin/bash
+
+SEARCH="$*"
+
+if [ $# == 0 ]; then
+  SEARCH=$(zenity --entry --title="GIPHY GIF Search" --text="Search Giphy for...")
+fi
+
+SEARCH=$(python -c "import urllib; print urllib.quote('''$SEARCH''')")
+
+chromium-browser --app="http://giphy.com/search/$SEARCH" --incognito
+

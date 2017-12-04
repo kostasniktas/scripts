@@ -1,0 +1,13 @@
+#!/bin/bash
+
+SEARCH="$*"
+
+if [ $# == 0 ]; then
+  SEARCH=$(zenity --entry --title="Google Image Search" --text="Search Google Images for...")
+fi
+
+SEARCH=$(python -c "import urllib; print urllib.quote('''$SEARCH''')")
+
+#chromium-browser --app=http://images.google.com --incognito
+chromium-browser --app="https://www.google.com/search?tbm=isch&q=$SEARCH" --incognito
+
