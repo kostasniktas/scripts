@@ -1,0 +1,27 @@
+#!/bin/zsh
+
+noauthors=()
+noauthorsclass=()
+
+cat - | while read i; do
+  FINDCLASS=$(find . -name "$(echo $i | sed 's/\./\//g' | sed 's/$.*//' | sed 's/.*\/\([^\/]\+\)/\1/').java")
+  AUTHOR=$(grep @author $FINDCLASS)
+  if [ -n "$AUTHOR" ]; then
+    echo -n "$AUTHOR" | tr '\r\n' ' ' | tr '\n' ' ' | sed 's/\*//g' | sed 's/@author//g' | sed 's/ \+\([a-z]\+\)/\1,/g' | sed 's/, *$//'
+    echo -e " $i"
+  else
+    noauthors=($noauthors $FINDCLASS)
+    noauthorsclass=($noauthorsclass $i)
+  fi
+done
+
+
+echo -e "\n\nWithout authors"
+for i in $noauthors; do
+  echo $i
+done
+
+echo ""
+for i in $noauthorsclass; do
+  echo $i
+done
