@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# User Options
+REMOTEPRIORITY=(upstream origin)
+
+# ARGS
+REV=${1:-HEAD}
+SHA=$(git rev-parse "${REV}")
+
+
+# Example usage: containsElement "string" "${BASHARRAY[@]}"
+function containsElement() {
+  local e match="${1}"
+  shift
+  for e; do [[ "${e}" == "${match}" ]] && return 0; done
+  return 1
+}
+
+REMOTES=$(git remote)
+_SAVEIFS=${IFS}
+IFS=$'\n'
+# shellcheck disable=SC2206
+REMOTES=(${REMOTES})
+IFS=${_SAVEIFS}
+unset _SAVEIFS
+
+
+for r in "${REMOTEPRIORITY[@]}"; do
+  if containsElement "${r}" "${REMOTES[@]}"; then
+    echo "Found ${r} using ${r}"
+    break
+  fi
+done
+
+#from __future__ import print_function
+#import sys
+#try:
+#  from urlparse import urlparse as up
+#except Exception as e:
+#  from urllib.parse import urlparse as up
+#print(up(sys.argv[1]))
