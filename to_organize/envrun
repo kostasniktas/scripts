@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ $# -lt 2 ]; then
+  echo "Usage ${0} ENVFILE COMMAND"
+  exit 1
+fi
+
+ENVFILE="${1}"
+
+test ! -f "${ENVFILE}" && echo "The env file ${ENVFILE} doesn't exist" && exit 1
+
+shift
+
+
+# shellcheck disable=SC2046,SC2002
+env $(cat "${ENVFILE}" | xargs) "$@"
+
