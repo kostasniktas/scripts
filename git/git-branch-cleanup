@@ -10,12 +10,13 @@ if [[ "$1" == "--nocolor" ]]; then
   RED=''
 fi
 
+MAINBRANCH=${MAINBRANCH:-master}
 
 MATCHED=""
 UNMATCHED=""
 for i in $(git branch | sed 's/^[\s\*]*//g'); do
-  if [[ "$i" != "master" ]]; then
-    MATCHES=$(git branch -r --contains $i | grep "/master$" | grep -v "/HEAD\s" | tr '\n' ' ')
+  if [[ "$i" != "${MAINBRANCH}" ]]; then
+    MATCHES=$(git branch -r --contains $i | grep "/${MAINBRANCH}$" | grep -v "/HEAD\s" | tr '\n' ' ')
     if [[ ! -z "$MATCHES" ]]; then
       MATCHED="${MATCHED}${GREEN}${i}${NC} -> ${MATCHES}\n"
     else
