@@ -10,7 +10,7 @@ if [[ "$1" == "--nocolor" ]]; then
   RED=''
 fi
 
-MAINBRANCH=${MAINBRANCH:-master}
+MAINBRANCH=${MAINBRANCH:-$(basename $(git symbolic-ref refs/remotes/origin/HEAD))}
 
 MATCHED=""
 UNMATCHED=""
