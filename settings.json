@@ -1,0 +1,12 @@
+{
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "editor.fontFamily": "'Iosevka', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "editor.formatOnType": true,
+    "editor.formatOnSave": true,
+    "files.exclude": {
+        "**/*.pyc": true
+    },
+    "python.defaultInterpreterPath": "${workspaceFolder}/venv/bin/python",
+}
