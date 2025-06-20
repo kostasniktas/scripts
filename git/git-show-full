@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Requires
+# - git
+# - fzf
+
+# h/t to https://jvns.ca/til/fzf-preview-git-commits/
+
+commit=${1:-HEAD}
+git show --stat=120 --format="" "$commit" | \
+           grep '|' | \
+           fzf --ansi \
+               --disabled \
+               --bind 'j:down,k:up,q:abort' \
+               --preview="echo {} | sed 's/ *|.*//' | xargs -I% git show --color=always $commit -- %" \
+               --preview-window=right:60%
+
+
