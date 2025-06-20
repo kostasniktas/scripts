@@ -4,7 +4,7 @@ GREEN='\033[0;32m'
 NC='\033[0;0m'
 RED='\033[0;31m'
 
-if [[ "$1" == "--nocolor" ]]; then
+if [[ "$1" == "--nocolor" ]] || [[  -p /dev/stdout  ]]; then
   GREEN=''
   NC=''
   RED=''
